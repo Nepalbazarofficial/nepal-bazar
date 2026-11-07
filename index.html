@@ -4,64 +4,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nepal Bazar</title>
+<meta name="theme-color" content="#102b50">
+<title>Nepal Bazar | Second-Hand Electronics</title>
 <style>
-body{margin:0;font-family:Arial;background:#f4f7f5;color:#18352b}
-header{background:#087f5b;color:white;padding:18px;text-align:center}
-.search{padding:15px;display:flex;gap:8px}
-input{padding:13px;border:1px solid #ddd;border-radius:8px;flex:1}
-button{background:#087f5b;color:white;border:0;padding:12px;border-radius:8px}
-main{padding:15px}
-h2{color:#087f5b}
-.categories,.products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.item{background:white;padding:18px;border-radius:12px;text-align:center}
-.item span{font-size:35px}
-.price{color:#087f5b;font-weight:bold}
-footer{text-align:center;padding:25px;color:#777}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6fa;color:#172b45}
+header{background:#102b50;color:white;padding:17px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-size:25px;font-weight:bold}
+.logo span{color:#f5b942}
+nav a{color:white;text-decoration:none;margin-left:18px;font-size:14px}
+.hero{background:linear-gradient(120deg,#102b50,#1769aa);color:white;padding:45px 6%;text-align:center}
+.hero h1{font-size:32px;margin:5px}
+.hero p{color:#dce9f7}
+.search{max-width:650px;margin:25px auto 0;display:flex;gap:8px}
+input{padding:14px;border:0;border-radius:8px;flex:1;min-width:0;font-size:15px}
+button{background:#f5b942;color:#102b50;border:0;padding:13px 18px;border-radius:8px;font-weight:bold;cursor:pointer}
+button:hover{opacity:.88}
+main{max-width:1150px;margin:auto;padding:25px 18px}
+.section-title{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+h2{font-size:22px}
+.categories{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.category{background:white;border:1px solid #e6eaf0;border-radius:12px;padding:18px 8px;text-align:center;cursor:pointer}
+.category:hover,.category.active{border:2px solid #1769aa;background:#edf5ff}
+.category span{font-size:30px}
+.category p{font-size:13px;font-weight:bold;margin-bottom:0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.filter{background:white;color:#173454;border:1px solid #dce3ec}
+.filter.active{background:#102b50;color:white}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.product{background:white;border-radius:12px;overflow:hidden;border:1px solid #e7ebf1}
+.product-image{height:145px;background:#edf2f8;display:flex;align-items:center;justify-content:center;font-size:65px}
+.product-info{padding:14px}
+.product h3{font-size:16px;margin:5px 0 9px}
+.price{font-size:18px;font-weight:bold;color:#087f5b}
+.meta{font-size:12px;color:#718096;margin:8px 0}
+.condition{font-size:11px;background:#e8f5ee;color:#087f5b;padding:5px 8px;border-radius:5px}
+.view{width:100%;margin-top:10px;background:#102b50;color:white}
+.sell{background:#eaf2fc;padding:28px;text-align:center;border-radius:14px;margin-top:35px}
+.sell h2{color:#102b50}
+footer{background:#102b50;color:#dce5ef;text-align:center;padding:25px;margin-top:35px;font-size:13px}
+.empty{text-align:center;padding:30px;color:#718096;grid-column:1/-1}
+@media(max-width:750px){
+.categories{grid-template-columns:repeat(3,1fr)}
+.products{grid-template-columns:repeat(2,1fr)}
+header{justify-content:center}
+nav a{margin:0 7px}
+.hero{padding:32px 15px}
+.hero h1{font-size:26px}
+}
+@media(max-width:400px){
+.products{grid-template-columns:1fr 1fr;gap:9px}
+.product-image{height:110px}
+.product-info{padding:10px}
+}
 </style>
 </head>
 <body>
+
 <header>
-<h1>🇳🇵 NEPAL BAZAR</h1>
-<p>Buy & Sell Everything in Nepal</p>
+<div class="logo">🇳🇵 NEPAL <span>BAZAR</span></div>
+<nav>
+<a href="#">Home</a>
+<a href="#categories">Categories</a>
+<a href="#products">Products</a>
+<a href="#sell">Sell Item</a>
+</nav>
 </header>
+
+<section class="hero">
+<h1>Buy Smart. Sell Easy.</h1>
+<p>Nepal's Marketplace for Second-Hand Electronics</p>
 <div class="search">
-<input placeholder="Search products...">
-<button>Search</button>
+<input id="searchInput" placeholder="Search mobile, laptop, parts...">
+<button onclick="searchProducts()">Search</button>
 </div>
+</section>
+
 <main>
-<h2>Categories</h2>
+<section id="categories">
+<div class="section-title"><h2>Browse Categories</h2></div>
 <div class="categories">
-<div class="item">📱<p>Mobiles</p></div>
-<div class="item">👕<p>Clothing</p></div>
-<div class="item">🏠<p>Home</p></div>
-<div class="item">🏍️<p>Vehicles</p></div>
-<div class="item">🏡<p>Property</p></div>
-<div class="item">🛋️<p>Furniture</p></div>
-<div class="item">📚<p>Books</p></div>
-<div class="item">📦<p>Other</p></div>
+<div class="category active" onclick="filterCategory('All',this)"><span>🛍️</span><p>All Items</p></div>
+<div class="category" onclick="filterCategory('Mobile',this)"><span>📱</span><p>Mobile</p></div>
+<div class="category" onclick="filterCategory('Laptop',this)"><span>💻</span><p>Laptop</p></div>
+<div class="category" onclick="filterCategory('Computer',this)"><span>🖥️</span><p>Computer</p></div>
+<div class="category" onclick="filterCategory('Parts',this)"><span>🔧</span><p>Parts</p></div>
+<div class="category" onclick="filterCategory('Tablet',this)"><span>📲</span><p>Tablet</p></div>
+<div class="category" onclick="filterCategory('Audio',this)"><span>🎧</span><p>Audio</p></div>
+<div class="category" onclick="filterCategory('Camera',this)"><span>📷</span><p>Camera</p></div>
+<div class="category" onclick="filterCategory('Gaming',this)"><span>🎮</span><p>Gaming</p></div>
+<div class="category" onclick="filterCategory('Accessories',this)"><span>🔌</span><p>Accessories</p></div>
 </div>
-<h2>Featured Products</h2>
-<div class="products">
-<div class="item">
-<span>📱</span>
-<h3>Mobile Phone</h3>
-<p class="price">NPR 25,000</p>
-<button>View Product</button>
+</section>
+
+<section id="products">
+<div class="section-title">
+<h2>Featured Second-Hand Products</h2>
 </div>
-<div class="item">
-<span>🛋️</span>
-<h3>Furniture</h3>
-<p class="price">NPR 5,000</p>
-<button>View Product</button>
+<div class="filters">
+<button class="filter active" onclick="setCondition('All',this)">All</button>
+<button class="filter" onclick="setCondition('Good',this)">Good</button>
+<button class="filter" onclick="setCondition('Like New',this)">Like New</button>
+<button class="filter" onclick="setCondition('For Parts',this)">For Parts</button>
 </div>
-</div>
-<h2>Sell Your Products</h2>
-<div class="item">
-<p>Want to sell something?</p>
-<button>Start Selling</button>
-</div>
+<div class="products" id="productList"></div>
+</section>
+
+<section id="sell" class="sell">
+<h2>Have Electronics to Sell?</h2>
+<p>List your used mobile, laptop, computer or electronic parts on Nepal Bazar.</p>
+<button onclick="alert('Online selling will be available after account and backend setup.')">Start Selling</button>
+</section>
 </main>
-<footer>© 2026 Nepal Bazar</footer>
+
+<footer>
+<strong>NEPAL BAZAR</strong>
+<p>Second-Hand Electronics Buy & Sell Marketplace</p>
+<p>© 2026 Nepal Bazar. All rights reserved.</p>
+<p>Buy Smart. Sell Easy.</p>
+</footer>
+
+<script>
+const products=[
+{name:"Used Smartphone",category:"Mobile",price:25000,condition:"Good",location:"Kathmandu",icon:"📱"},
+{name:"Used Laptop",category:"Laptop",price:45000,condition:"Like New",location:"Pokhara",icon:"💻"},
+{name:"Desktop Computer",category:"Computer",price:35000,condition:"Good",location:"Lalitpur",icon:"🖥️"},
+{name:"Mobile Display Parts",category:"Parts",price:3500,condition:"Good",location:"Kathmandu",icon:"🔧"},
+{name:"Used Tablet",category:"Tablet",price:12000,condition:"Good",location:"Bhaktapur",icon:"📲"},
+{name:"Bluetooth Headphones",category:"Audio",price:2500,condition:"Like New",location:"Chitwan",icon:"🎧"},
+{name:"Digital Camera",category:"Camera",price:18000,condition:"Good",location:"Pokhara",icon:"📷"},
+{name:"Gaming Console",category:"Gaming",price:22000,condition:"Good",location:"Kathmandu",icon:"🎮"},
+{name:"Laptop Charger",category:"Accessories",price:1500,condition:"For Parts",location:"Biratnagar",icon:"🔌"},
+{name:"Laptop RAM",category:"Parts",price:2000,condition:"Good",location:"Kathmandu",icon:"💾"}
+];
+
+let selectedCategory="All";
+let selectedCondition="All";
+
+function renderProducts(){
+const query=document.getElementById("searchInput").value.toLowerCase();
+const filtered=products.filter(p=>
+(selectedCategory==="All"||p.category===selectedCategory)&&
+(selectedCondition==="All"||p.condition===selectedCondition)&&
+(p.name.toLowerCase().includes(query)||p.category.toLowerCase().includes(query)||p.location.toLowerCase().includes(query))
+);
+const list=document.getElementById("productList");
+list.innerHTML="";
+if(!filtered.length){
+list.innerHTML='<div class="empty">No products found. Try another search.</div>';
+return;
+}
+filtered.forEach(p=>{
+const card=document.createElement("div");
+card.className="product";
+card.innerHTML=`
+<div class="product-image">${p.icon}</div>
+<div class="product-info">
+<span class="condition">${p.condition}</span>
+<h3>${p.name}</h3>
+<div class="price">NPR ${p.price.toLocaleString("en-IN")}</div>
+<div class="meta">📍 ${p.location}</div>
+<button class="view">View Details</button>
+</div>`;
+card.querySelector("button").onclick=()=>alert(
+p.name+"\nPrice: NPR "+p.price.toLocaleString("en-IN")+
+"\nCondition: "+p.condition+"\nLocation: "+p.location+
+"\n\nSample listing – seller details will appear after backend setup."
+);
+list.appendChild(card);
+});
+}
+
+function filterCategory(category,element){
+selectedCategory=category;
+document.querySelectorAll(".category").forEach(x=>x.classList.remove("active"));
+element.classList.add("active");
+renderProducts();
+}
+
+function setCondition(condition,element){
+selectedCondition=condition;
+document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
+element.classList.add("active");
+renderProducts();
+}
+
+function searchProducts(){renderProducts();}
+document.getElementById("searchInput").addEventListener("input",renderProducts);
+renderProducts();
+</script>
 </body>
 </html>
